@@ -1,1 +1,3 @@
 # AutomationSeleniumShopTesting
+
+This is the automation PrestaShop.com test. The script by using the Selenium and Cucumber syntax logs in as registered user, adds the address to account details, checks if the address was added correctly by assertion comparing of the examples table details and actual added data. It deletes the address and checks the confirmation message and close the browser. The other script logs in, adds the items to the shopping cart, changes the amount and size by getting the data from the examples table, checks the discount, chooses the methods of shipment and payment, scrolls down the page to see the full order confirmation and takes the screenshot of it. 
