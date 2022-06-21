@@ -4,7 +4,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -47,29 +46,38 @@ public class BuyingItemSteps {
         driver.findElement(By.partialLinkText(item)).click();
     }
 
-    @Then("^User checks the (.*)$")
-    public void userChecksTheDiscount(String discount) {
-        String discountVisible = driver.findElement(By.className("discount-percentage")).getText();
-        Assert.assertEquals(discount, discountVisible);
-    }
-
-
-    @And("^User parametrize it with (.*), (.*), (.*)$")
+    @Then("^User parametrize it with (.*), (.*), (.*)$")
     public void userParametrizeIt(String size, int quantity, String colour) {
         parameterPage = new ParameterizationPage(driver);
         parameterPage.iChooseQuantity(quantity);
         parameterPage.iChooseTheSize(size);
         parameterPage.iChooseColour(colour);
         parameterPage.addClick();
+        parameterPage.procButton();
     }
 
-    @Then("User proceeds to checkout")
+    @And("User checks the discount and proceeds to checkout")
     public void userProceedsToCheckout() {
-        driver.findElement(By.partialLinkText("PROCEED TO CHECKOUT")).click();
+        try {
+            String regPrice = driver.findElement(By.className("regular-price")).getText();
+            String reg = regPrice.replaceAll("[^0-9]", "");
+
+            String disPrice = driver.findElement(By.className("price")).getText();
+            String dis = disPrice.replaceAll("[^0-9]", "");
+            double a = Integer.parseInt(dis);
+            double b = Integer.parseInt(reg);
+            double c = 100 * (a / b);
+            double d = 100 - c;
+            int e = (int) d;
+
+            System.out.println("Discount: " + e + "%");
+        } catch (NoSuchElementException ex) {
+            System.out.println("No discount for this item");
+        }
         driver.findElement(By.partialLinkText("PROCEED TO CHECKOUT")).click();
     }
 
-    @And("^User chooses delivery, (.*) and (.*) methods$")
+    @Then("^User chooses delivery, (.*) and (.*) methods$")
     public void userChoosesDeliveryShipmentAndPaymentMethods(String delivery, String payment) {
         checkoutPage = new CheckoutProcedurePage(driver);
         checkoutPage.addressConfirmation();
@@ -77,15 +85,16 @@ public class BuyingItemSteps {
         checkoutPage.paymentType(payment);
     }
 
-    @Then("User takes screenshot of order confirmation")
+    @And("User takes screenshot of order confirmation")
     public void userTakesScreenshotOfOrderConfirmation() throws IOException {
         printScreen = new PrintScreenMethod(driver);
         printScreen.takeScreenShot();
     }
 
-    @And("User closes browser")
+    @Then("User closes browser")
     public void userClosesBrowser() {
         driver.quit();
     }
+
 }
 

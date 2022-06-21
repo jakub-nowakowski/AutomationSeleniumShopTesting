@@ -17,6 +17,8 @@ public class ParameterizationPage {
     WebElement qtySection;
     @FindBy(className = "add")
     WebElement addButton;
+    @FindBy(partialLinkText = "PROCEED TO CHECKOUT")
+    WebElement proceedButton;
 
     public ParameterizationPage(WebDriver driver) {
         this.driver = driver;
@@ -24,9 +26,13 @@ public class ParameterizationPage {
     }
 
     public void iChooseTheSize(String size) {
+        try {
         WebElement selectElement = sizeSection;
         Select selectObject = new Select(selectElement);
         selectObject.selectByVisibleText(size);
+    } catch (NoSuchElementException ex) {
+        System.out.println("You cannot parameterize the size for this item");
+    }
     }
 
     public void iChooseQuantity(int quantity) {
@@ -36,10 +42,18 @@ public class ParameterizationPage {
 
     public void iChooseColour(String colour) {
         String colourLocator = "//label[contains(.,'" + colour + "')]";
+        try {
         driver.findElement(By.xpath(colourLocator)).click();
+        } catch (NoSuchElementException ex) {
+            System.out.println("You cannot parameterize the colour for this item");
+        }
     }
 
     public void addClick() {
         addButton.click();
+    }
+
+    public void procButton() {
+        proceedButton.click();
     }
 }
