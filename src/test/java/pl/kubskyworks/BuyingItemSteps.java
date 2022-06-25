@@ -49,11 +49,11 @@ public class BuyingItemSteps {
     @Then("^User parametrize it with (.*), (.*), (.*)$")
     public void userParametrizeIt(String size, int quantity, String colour) {
         parameterPage = new ParameterizationPage(driver);
-        parameterPage.iChooseQuantity(quantity);
         parameterPage.iChooseTheSize(size);
         parameterPage.iChooseColour(colour);
         parameterPage.addClick();
-        parameterPage.procButton();
+        parameterPage.proceedBtn();
+        parameterPage.iChooseQuantity(quantity);
     }
 
     @And("User checks the discount and proceeds to checkout")

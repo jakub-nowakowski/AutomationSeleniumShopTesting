@@ -13,5 +13,5 @@ Feature: Buy an item
     Examples:
       | e-mail                          | password     | item                        | size | colour | quantity | shipment   | payment          |
       | AnthonySSullivan@jourrapide.com | Haisenberg08 | Hummingbird Printed T-Shirt | L    | Black  | 5        | PrestaShop | Pay by Check     |
-      | AnthonySSullivan@jourrapide.com | Haisenberg08 | Hummingbird Printed Sweater | M    | -      | 7        | My carrier | Pay by bank wire |
+      | AnthonySSullivan@jourrapide.com | Haisenberg08 | Hummingbird Printed Sweater | M    | -      | 3        | My carrier | Pay by bank wire |
       | AnthonySSullivan@jourrapide.com | Haisenberg08 | Mug The Adventure Begins    | -    | -      | 12       | My carrier | Pay by bank wire |
